@@ -1,0 +1,161 @@
+RewriteEngine On
+
+<IfModule mod_rewrite.c>
+	RewriteCond %{HTTP_USER_AGENT} ^w3af.sourceforge.net [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} dirbuster [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} nikto [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} SF [OR]
+	RewriteCond %{HTTP_USER_AGENT} sqlmap [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} fimap [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} nessus [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} whatweb [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} Openvas [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} jbrofuzz [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} libwhisker [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} webshag [NC,OR]
+	RewriteCond %{HTTP:Acunetix-Product} ^WVS
+	RewriteRule ^.* 127.0.0.1/ [R=301,L]
+</IfModule>
+
+Header always append X-Frame-Options SAMEORIGIN
+Header set Set-Cookie HttpOnly;Secure;
+
+
+Options +FollowSymLinks
+RewriteCond %{HTTP_HOST} ^www\.(.*)
+RewriteCond %{HTTPS} !=on
+
+#	HTTPS
+	RewriteCond %{HTTPS} !=on
+	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#	Options +FollowSymLinks
+	RewriteCond %{HTTP_HOST} ^www\.(.*)
+	RewriteRule (.*) https://%1/$1 [R=301,L]
+
+# secure htaccess file
+<Files .htaccess>
+	order allow,deny
+	deny from all
+</Files>
+
+# multiple file types
+<FilesMatch ".(htaccess|htpasswd|ini|php|fla|psd|log|sh)$">
+	Order Allow,Deny
+	Deny from all
+</FilesMatch>
+
+<FilesMatch "^(_cron|cke_plugins|download|backup|administrador|index|index_rel|index2|genericoJSON|json|gerarExcel|gerarPDF|gerarPDFB|gerarPDFNoHeader|gerarNoHeader|gerar|loja|baixarDocumento|limpaDir|boleto|emailSenha|upload|indisponivel|paginacao|paginacao-admin-irmaos|paginacao-loja-candidatos|paginacao-admin-consultas-irmaos-acessos|verificarcpf|verificar-unidade|cadastrarparticipante|consultacupons|consulta-unidades|consultacupom|cadastracupons|consultaUnidade|gera_numeros|import|export|backup)\.php$">
+	order allow,deny
+	allow from all
+</FilesMatch>
+
+
+
+	RewriteRule ^datatables/?$ sigadm/index2.php [L]
+
+	RewriteRule ^adm/?$ sigadm/index.php [L]
+
+	RewriteRule ^adm/admin/relatorios/graficos/([a-z0-9_-]+)?$ sigadm/index_rel.php?sec=admin&modulo=relatorios&folder=graficos&page=$1 [L]
+
+	RewriteRule ^adm/admin/relatorios/graficos/([a-z0-9_-]+)/([0-9]+)?$ sigadm/index_rel.php?sec=admin&modulo=relatorios&folder=graficos&page=$1&id=$2 [L]
+
+	RewriteRule ^adm/admin/relatorios/graficos/([a-z0-9_-]+)/([0-9]+)/([0-9]+)?$ sigadm/index_rel.php?sec=admin&modulo=relatorios&folder=graficos&page=$1&id=$2&id2=$3 [L]
+
+	RewriteRule ^adm/admin/relatorios/graficos/([a-z0-9_-]+)/([0-9]+)/([0-9]+)/([0-9]+)?$ sigadm/index_rel.php?sec=admin&modulo=relatorios&folder=graficos&page=$1&id=$2&id2=$3&id3=$4 [L]
+
+
+#-- Regra geral PDF's
+
+
+	RewriteRule ^adm/pdf/admin/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=admin&modulo=$1&page=$2PDF [L]
+
+	RewriteRule ^adm/pdf/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=admin&modulo=$1&page=$2PDF&id=$3 [L]
+
+	RewriteRule ^adm/pdf/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)/([0-9]+)/([0-9]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=admin&modulo=$1&page=$2PDF&id=$3&id2=$4&id3=$4 [L]
+
+	RewriteRule ^adm/pdf/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=admin&modulo=$1&folder=$2&page=$3PDF [L]
+
+	RewriteRule ^adm/pdf/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=admin&modulo=$1&folder=$2&page=$3PDF&id=$4 [L]
+
+	RewriteRule ^adm/pdf/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=admin&modulo=$1&folder=$2&folder2=$3&page=$4PDF [L]	
+
+	RewriteRule ^adm/pdf/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=admin&modulo=$1&folder=$2&folder2=$3&page=$4PDF&id=$5 [L]	
+
+	RewriteRule ^adm/pdf/([a-z0-9_-]+)/([0-9]+)?$ sigadm/gerarPDF.php?is_pdf=true&page=$1&id=$2 [L]
+
+	RewriteRule ^adm/pdf/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/gerarPDF.php?is_pdf=true&page=$2&sec=$1 [L]
+
+	RewriteRule ^adm/pdf/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=$1&page=$2&id=$3 [L]
+
+	RewriteRule ^adm/pdf/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)/([0-9]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=$1&page=$2&id=$3&tipo=$4 [L]
+
+	RewriteRule ^adm/pdf/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)/([0-9]+)/([0-9]+)?$ sigadm/gerarPDF.php?is_pdf=true&sec=$1&page=$2&id=$3&id2=$4&id3=$5 [L]
+
+#-- Regra geral PDF's
+
+
+	RewriteRule ^adm/excel/admin/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/gerarExcel.php?sec=admin&modulo=$1&page=$2 [L]
+
+	RewriteRule ^adm/excel/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/gerarExcel.php?sec=admin&modulo=$1&page=$2&id=$3 [L]
+
+	RewriteRule ^adm/excel/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/gerarExcel.php?sec=admin&modulo=$1&folder=$2&page=$3 [L]
+
+	RewriteRule ^adm/excel/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/gerarExcel.php?sec=admin&modulo=$1&folder=$2&page=$3&id=$4 [L]
+
+	RewriteRule ^adm/excel/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/gerarExcel.php?sec=admin&modulo=$1&folder=$2&folder2=$3&page=$4 [L]	
+
+	RewriteRule ^adm/excel/admin/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/gerarExcel.php?sec=admin&modulo=$1&folder=$2&folder2=$3&page=$4&id=$5 [L]	
+
+
+	RewriteRule ^adm/([a-z0-9_-]+)?$ sigadm/index.php?page=$1 [L]
+
+	RewriteRule ^adm/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/index.php?sec=$1&page=$2 [L]
+
+	RewriteRule ^adm/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/index.php?sec=$1&page=$2&id=$3 [L]
+
+	RewriteRule ^adm/([a-z0-9_-]+)/([a-z0-9_-]+)/pagina/([0-9]+)?$ sigadm/index.php?sec=$1&page=$2&pagina=$3 [L]
+
+	RewriteRule ^adm/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/index.php?sec=$1&modulo=$2&page=$3 [L]
+
+	RewriteRule ^adm/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/index.php?sec=$1&modulo=$2&page=$3&id=$4 [L]
+
+	RewriteRule ^adm/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)/([0-9]+)?$ sigadm/index.php?sec=$1&modulo=$2&page=$3&id=$4&id2=$5 [L]
+
+	RewriteRule ^adm/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)?$ sigadm/index.php?sec=$1&modulo=$2&folder=$3&page=$4 [L]
+
+	RewriteRule ^adm/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ sigadm/index.php?sec=$1&modulo=$2&folder=$3&page=$4&id=$5 [L]
+
+	RewriteRule ^adm/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)/([a-z0-9_-]+)?$ sigadm/index.php?sec=$1&modulo=$2&folder=$3&page=$4&id=$5&acao=$6 [L]
+
+
+	RewriteRule ^administrador/?$ index.php?adm=true [L]
+
+	RewriteRule ^logout/?$ index.php?logout=true [L]
+
+	RewriteRule ^restrito/?$ index.php?restrito=true [L]
+
+
+	RewriteRule ^([a-z0-9_-]+)/([0-9]+)?$ index.php?page=$1&id=$2 [L]
+
+	RewriteRule ^([a-z0-9_-]+)/pagina/([0-9]+)?$ index.php?page=$1&pagina=$2 [L]
+
+	RewriteRule ^([a-z0-9_-]+)/([a-z0-9_-]+)?$ index.php?sec=$1&page=$2 [L]
+
+	RewriteRule ^([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ index.php?sec=$1&page=$2&id=$3 [L]
+
+	RewriteRule ^([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)?$ index.php?sec=$1&modulo=$2&page=$3 [L]
+
+	RewriteRule ^([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)/pagina/([0-9]+)?$ index.php?sec=$1&page=$2&id=$3&pagina=$4 [L]
+
+	RewriteRule ^([a-z0-9_-]+)/([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)?$ index.php?sec=$1&modulo=$2&page=$3&id=$4 [L]
+
+	RewriteRule ^([a-z0-9_-]+)/([a-z0-9_-]+)/pagina/([0-9]+)?$ index.php?sec=$1&page=$2&pagina=$3 [L]
+
+	RewriteRule ^([a-z0-9_-]+)/([a-z0-9_-]+)/([0-9]+)/([0-9]+)?$ index.php?sec=$1&page=$2&id=$3&tipo=$4 [L]
+
+	RewriteRule ^([a-z0-9_-]+)/?$ index.php?page=$1	[L]
+
+	ErrorDocument 403 /
+
+	ErrorDocument 404 http://%{HTTP_HOST}%

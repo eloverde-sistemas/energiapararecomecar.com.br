@@ -1,0 +1,128 @@
+
+/************************* Helper classes *************************/
+
+.icon-btn > div {
+	padding-left:5px !important;
+	padding-right:5px !important;
+}
+
+.block, .show{display:block !important;}
+.table{ display: table; }
+.hide{display:none !important;}
+
+.pointer{cursor:pointer;}
+
+.center{ margin: 0 auto !important; }
+.left{ float:left !important; }
+.right{ float:right !important; }
+.clear{ clear:both !important; }
+
+.no-list{ list-style:none; margin: 0; padding: 0  !important; }
+.no-float{ float: none !important; }
+.no-margin{ margin:0 !important; }
+.no-margin-top{ margin-top:0 !important; }
+.no-padding{ padding:0 !important; }
+.no-hover:hover{ background:none !important; }
+.no-a{ text-decoration:none !important; color:#333 !important; cursor:default !important; }
+
+ul.inline li{ display: inline-block !important; }
+
+.text-center{ text-align: center !important; }
+.text-left{ text-align: left !important; }
+.text-right{ text-align: right !important; }
+
+.ml-100{ margin-left: 100px !important; }
+.ml-75{ margin-left: 75px !important; }
+.ml-50{ margin-left: 50px !important; }
+.ml-25{ margin-left: 25px !important; }
+.ml-20{ margin-left: 20px !important; }
+.ml-10{ margin-left: 10px !important; }
+
+.mr-100{ margin-right: 100px !important; }
+.mr-75{ margin-right: 75px !important; }
+.mr-50{ margin-right: 50px !important; }
+.mr-25{ margin-right: 25px !important; }
+.mr-10{ margin-right: 10px !important; }
+
+.spacer-5{ margin-top: 5px !important; }
+.spacer-10{ margin-top: 10px !important; }
+.spacer-13{ margin-top: 13px !important; }
+.spacer-20{ margin-top: 20px !important; }
+.spacer-30{ margin-top: 30px !important; }
+.spacer-40{ margin-top: 40px !important; }
+.spacer-50{ margin-top: 50px !important; }
+
+.jumper-10{ margin-bottom: 10px !important; }
+.jumper-20{ margin-bottom: 20px !important; }
+.jumper-30{ margin-bottom: 30px !important; }
+.jumper-35{ margin-bottom: 35px !important; }
+.jumper-40{ margin-bottom: 40px !important; }
+.jumper-50{ margin-bottom: 50px !important; }
+
+.text-white{ color: white; }
+
+small, .small {
+    font-size: 80%;
+}
+
+label.error{
+	color: #A94442;
+	font-weight: normal;
+	position:relative;
+	padding: 0;
+}
+
+.radio-list label.error {
+	padding-top: 15px;
+	white-space: nowrap;
+}
+
+.msgValidate{
+	color: #A94442;
+	font-weight: normal !important;
+	position:absolute;
+	padding: 0;
+}
+
+/* ORDENAÇÃO / CARGOS */
+
+[class^='menu-sortable'] { cursor:move; list-style-type: none; margin: 0; padding: 0; }
+[class^='menu-sortable'] li { margin: 10px; padding-left: 5px; line-height: 1.5em; font-size: 1.3em; font-weight: bolder;}
+[class^='menu-sortable'] li span.ordem{ width: 20px; }
+.ui-state-highlight { height: 1.5em; }
+.ui-state-default a img{padding:6px 6px 6px 0; cursor: pointer; }
+.dropped{ background:#FF8A8A !important; border: none; }
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+	border: 1px solid #d3d3d3;
+	background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #555555;
+}
+
+/* FIM MENU PERSONALIZADO*/
+/************************* Helper classes *************************/
+
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover{ color: #DDD; }
+
+/* DASHBOARD */
+
+.dashboard-stat .details .number{ padding-top: 15px; }
+
+.obsOk{
+	color:#339900;
+	font-weight:bold;
+}
+.obsNaoBaixa{
+	color:#FF0000;
+	font-weight:bold;
+}
+.obsAtraso{
+	color:#FF9900;
+	font-weight:bold;
+}
+
+.classicReadonly{
+	cursor:default !important;
+	background-color: #fff !important;	
+}

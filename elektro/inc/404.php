@@ -1,0 +1,1 @@
+	<h2><?=$translate->translate("msg_pagina_nao_encontrada")?></h2>

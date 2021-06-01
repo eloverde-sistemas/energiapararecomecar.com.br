@@ -1,0 +1,1 @@
+$.fn.datepicker.defaults.language = "en";
